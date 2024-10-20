@@ -1,10 +1,10 @@
-project_name: {{ .PluginName }}
+project_name: argo-apps-viz
 release:
   github:
-    owner: {{ .Owner }}
-    name: {{ .Repo }}
+    owner: syndlex
+    name: argo-apps-viz
 builds:
-  - id: {{ .PluginName }}
+  - id: argo-apps-viz
     goos:
     - linux
     - windows
@@ -17,12 +17,12 @@ builds:
       - GO111MODULE=on
     main: cmd/plugin/main.go
     ldflags: -s -w
-      -X github.com/{{ .Owner }}/{{ .Repo }}/pkg/version.version=
+      -X github.com/syndlex/argo-apps-viz/pkg/version.version=
 archives:
-  - id: {{ .PluginName }}
+  - id: argo-apps-viz
     builds:
-    - {{ .PluginName }}
-    name_template: {{ `"{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"` }}
+    - argo-apps-viz
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
     format_overrides:
     - goos: windows
       format: zip

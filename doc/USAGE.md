@@ -3,19 +3,19 @@
 The following assumes you have the plugin installed via
 
 ```shell
-kubectl krew install {{ .PluginName }}
+kubectl krew install argo-apps-viz
 ```
 
 ### Scan images in your current kubecontext
 
 ```shell
-kubectl {{ .PluginName }}
+kubectl argo-apps-viz
 ```
 
-### Scan images in another kubecontext
+
 
 ```shell
-kubectl {{ .PluginName }} --context=context-name
+kubectl argo-apps-viz --context=context-name
 ```
 
 ## How it works
