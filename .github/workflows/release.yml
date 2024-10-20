@@ -7,18 +7,21 @@ jobs:
   goreleaser:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@master
-      - name: Setup Go
-        uses: actions/setup-go@v1
+      - uses: actions/checkout@v4
         with:
-          go-version: 1.13
-      - name: GoReleaser
-        uses: goreleaser/goreleaser-action@v1
+          fetch-depth: 0 # fetch full history for goreleaser changelog
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v6.0.0
         with:
           version: latest
-          args: release --rm-dist
+          args: release --rm-dist --config deploy/.goreleaser.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Update new version in krew-index
-        uses: rajatjindal/krew-release-bot@v0.0.38
+      - name: Update new outdated version in krew-index
+        uses: rajatjindal/krew-release-bot@v0.0.46
+        with:
+          krew_template_file: deploy/krew/outdated.yaml
