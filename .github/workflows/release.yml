@@ -17,8 +17,9 @@ jobs:
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6.0.0
         with:
-          version: latest
-          args: release --rm-dist --config deploy/.goreleaser.yaml
+          distribution: goreleaser
+          version: "~> v2"
+          args: release --clean --config deploy/.goreleaser.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Update new outdated version in krew-index

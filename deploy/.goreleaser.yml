@@ -17,12 +17,24 @@ builds:
       - GO111MODULE=on
     main: cmd/plugin/main.go
     ldflags: -s -w
-      -X github.com/syndlex/argo-apps-viz/pkg/version.version=
+      -X github.com/syndlex/argo-apps-viz/pkg/version.version={{.Version}}
+    flags: -tags netgo -installsuffix netgo
+    binary: argo-apps-viz
 archives:
   - id: argo-apps-viz
+    format: tar.gz
     builds:
     - argo-apps-viz
-    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+    name_template: "{{ .Binary }}_{{ .Os }}_{{ .Arch }}"
     format_overrides:
     - goos: windows
       format: zip
+    files:
+      - licence*
+      - LICENCE*
+      - license*
+      - LICENSE*
+      - readme*
+      - README*
+      - changelog*
+      - CHANGELOG*
