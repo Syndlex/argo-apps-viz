@@ -3,50 +3,45 @@ kind: Plugin
 metadata:
   name: argo-apps-viz
 spec:
-  version: {{ .TagName }}
+  version: { { .TagName } }
   platforms:
-  - selector:
-      matchLabels:
-        os: linux
-        arch: amd64
-    {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_linux_amd64.tar.gz" .TagName }}
-    files:
-    - from: "./argo-apps-viz"
-      to: "."
-    - from: LICENSE
-      to: "."
-    bin: "argo-apps-viz"
-  - selector:
-      matchLabels:
-        os: darwin
-        arch: amd64
-    {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_darwin_amd64.tar.gz" .TagName }}
-    files:
-    - from: "./argo-apps-viz"
-      to: "."
-    - from: LICENSE
-      to: "."
-    bin: "argo-apps-viz"
-  - selector:
-      matchLabels:
-        os: windows
-        arch: amd64
-    {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_windows_amd64.zip" .TagName }}
-    files:
-    - from: "/argo-apps-viz.exe"
-      to: "."
-    - from: LICENSE
-      to: "."
-    bin: "argo-apps-viz.exe"
+    - selector:
+        matchLabels:
+          os: linux
+          arch: amd64
+      {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_linux_amd64.tar.gz" .TagName }}
+      files:
+        - from: "./argo-apps-viz"
+          to: "."
+        - from: LICENSE
+          to: "."
+      bin: "argo-apps-viz"
+    - selector:
+        matchLabels:
+          os: darwin
+          arch: amd64
+      {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_darwin_amd64.tar.gz" .TagName }}
+      files:
+        - from: "./argo-apps-viz"
+          to: "."
+        - from: LICENSE
+          to: "."
+      bin: "argo-apps-viz"
+    - selector:
+        matchLabels:
+          os: windows
+          arch: amd64
+      {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_windows_amd64.zip" .TagName }}
+      files:
+        - from: "/argo-apps-viz.exe"
+          to: "."
+        - from: LICENSE
+          to: "."
+      bin: "argo-apps-viz.exe"
   homepage: https://github.com/syndlex/argo-apps-viz
-  caveats: |
-    Usage:
-      $ kubectl argo-apps-viz
-
-    For additional options:
-      $ kubectl argo-apps-viz --help
-      or https://github.com/syndlex/argo-apps-viz/blob/{{ .TagName }}/doc/USAGE.md
-  shortDescription: A kubectl plugin that visualizes ArgoCD concepts like the 'App of Apps' and dependency trees for documentation and teaching.
+  shortDescription: Visualizes ArgoCD for documentation and teaching.
   description: |
-    shortDescription: A small kubectl plugin that generates visual representations (using go-echarts) to document and illustrate ArgoCD concepts, such as the 'App of Apps' pattern across multiple clusters and dependency trees, primarily for documentation, learning, and teaching purposes.
-
+    Generates visual representations (using go-echarts) to document 
+    and illustrate ArgoCD concepts, such as the 'App of Apps' pattern
+    across multiple clusters and dependency trees, primarily for
+    documentation, learning, and teaching purposes.
