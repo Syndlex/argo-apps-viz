@@ -16,14 +16,19 @@ type Apps struct {
 
 func (r *Apps) AddApps(item v1alpha1.Application) {
 	tracking := item.Annotations["argocd.argoproj.io/tracking-id"]
+
 	if tracking != "" {
 		tracking = strings.Split(tracking, ":")[0]
-	} else {
+	}
+	if tracking == "" {
+		tracking = item.Labels["argocd.argoproj.io/instance"]
+	}
+	if tracking == "" {
 		references := item.OwnerReferences
 		if len(references) != 0 {
 			tracking = references[0].Name
 		} else {
-			println(item.GetName(), " has no refrence")
+			println(item.GetName(), " has no reference with Label (argocd.argoproj.io/instance), OwnerReferences or Annotation (argocd.argoproj.io/tracking-id)")
 		}
 	}
 	r.Apps = append(r.Apps, App{
