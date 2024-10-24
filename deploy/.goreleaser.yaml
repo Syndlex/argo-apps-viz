@@ -17,24 +17,10 @@ builds:
     - amd64
     - arm
     - arm64
-    - ppc64le
-    - s390x
     goarm: [6, 7]
 archives:
   - id: argo-apps-viz
-    name_template: |-
-      argo-apps-viz_{{ .Tag }}_{{ .Os }}_
-      {{- with .Arch -}}
-        {{- if (eq . "386") -}}i386
-        {{- else if (eq . "amd64") -}}x86_64
-        {{- else -}}{{- . -}}
-        {{- end -}} 
-      {{ end }}
-      {{- with .Arm -}}
-        {{- if (eq . "6") -}}hf
-        {{- else -}}v{{- . -}}
-        {{- end -}}
-      {{- end -}}
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
     builds:
     - argo-apps-viz
     format_overrides:
