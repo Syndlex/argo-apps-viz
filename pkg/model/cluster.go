@@ -10,6 +10,10 @@ type Clusters struct {
 
 func (c Clusters) AddDomainFromApp(item alpha1.Application) {
 	destName := item.Spec.Destination.Name
+	//Use Server when name is not used
+	if destName == "" {
+		destName = item.Spec.Destination.Server
+	}
 
 	domain := c.Domains[destName]
 	if domain == nil {
@@ -23,6 +27,10 @@ func (c Clusters) AddDomainFromApp(item alpha1.Application) {
 
 func (c Clusters) AddDomainFromAppSet(item alpha1.ApplicationSet) {
 	destName := item.Spec.Template.Spec.Destination.Name
+	//Use Server when name is not used
+	if destName == "" {
+		destName = item.Spec.Template.Spec.Destination.Server
+	}
 
 	domain := c.Domains[destName]
 	if domain == nil {
