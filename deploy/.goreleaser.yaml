@@ -5,36 +5,42 @@ release:
     name: argo-apps-viz
 builds:
   - id: argo-apps-viz
-    goos:
-    - linux
-    - windows
-    - darwin
-    goarch:
-    - amd64
-    - "386"
+    main: cmd/plugin/main.go
+    binary: argo-apps-viz
     env:
       - CGO_ENABLED=0
-      - GO111MODULE=on
-    main: cmd/plugin/main.go
-    ldflags: -s -w
-      -X github.com/syndlex/argo-apps-viz/pkg/version.version={{.Version}}
-    flags: -tags netgo -installsuffix netgo
-    binary: argo-apps-viz
+    goos:
+    - linux
+    - darwin
+    - windows
+    goarch:
+    - amd64
+    - arm
+    - arm64
+    - ppc64le
+    - s390x
+    goarm: [6, 7]
 archives:
   - id: argo-apps-viz
-    format: tar.gz
+    name_template: |-
+      argo-apps-viz_{{ .Tag }}_{{ .Os }}_
+      {{- with .Arch -}}
+        {{- if (eq . "386") -}}i386
+        {{- else if (eq . "amd64") -}}x86_64
+        {{- else -}}{{- . -}}
+        {{- end -}} 
+      {{ end }}
+      {{- with .Arm -}}
+        {{- if (eq . "6") -}}hf
+        {{- else -}}v{{- . -}}
+        {{- end -}}
+      {{- end -}}
     builds:
     - argo-apps-viz
-    name_template: "{{ .Binary }}_{{ .Os }}_{{ .Arch }}"
     format_overrides:
     - goos: windows
       format: zip
-    files:
-      - licence*
-      - LICENCE*
-      - license*
-      - LICENSE*
-      - readme*
-      - README*
-      - changelog*
-      - CHANGELOG*
+    files: ["LICENSE"]
+checksum:
+  name_template: "checksums.txt"
+  algorithm: sha256
