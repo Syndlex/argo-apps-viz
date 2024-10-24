@@ -12,47 +12,47 @@ spec:
     documentation, learning, and teaching purposes.
   version: {{ .TagName }}
   platforms:
-    - selector:
-        matchLabels:
-          os: linux
-          arch: amd64
-      {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_linux_amd64.tar.gz" .TagName }}
-      files:
-        - from: "./argo-apps-viz"
-          to: "."
-        - from: LICENSE
-          to: "."
-      bin: "argo-apps-viz"
-    - selector:
-        matchLabels:
-          os: linux
-          arch: arm64
-      {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_linux_arm64.tar.gz" .TagName }}
-      files:
-        - from: "./argo-apps-viz"
-          to: "."
-        - from: LICENSE
-          to: "."
-      bin: "argo-apps-viz"
-    - selector:
-        matchLabels:
-          os: darwin
-          arch: amd64
-      {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_darwin_amd64.tar.gz" .TagName }}
-      files:
-        - from: "./argo-apps-viz"
-          to: "."
-        - from: LICENSE
-          to: "."
-      bin: "argo-apps-viz"
-    - selector:
-        matchLabels:
-          os: windows
-          arch: amd64
-      {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_windows_amd64.zip" .TagName }}
-      files:
-        - from: "/argo-apps-viz.exe"
-          to: "."
-        - from: LICENSE
-          to: "."
-      bin: "argo-apps-viz.exe"
+  - selector:
+      matchLabels:
+        os: linux
+        arch: amd64
+    {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_linux_amd64.tar.gz" .TagName }}
+    files:
+    - from: "./argo-apps-viz"
+      to: "."
+    - from: LICENSE
+      to: "."
+    bin: "argo-apps-viz"
+  - selector:
+      matchLabels:
+        os: linux
+        arch: arm64
+    {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_linux_arm64.tar.gz" .TagName }}
+    files:
+    - from: "./argo-apps-viz"
+      to: "."
+    - from: LICENSE
+      to: "."
+    bin: "argo-apps-viz"
+  - selector:
+      matchLabels:
+        os: darwin
+        arch: amd64
+    {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_darwin_amd64.tar.gz" .TagName }}
+    files:
+    - from: "./argo-apps-viz"
+      to: "."
+    - from: LICENSE
+      to: "."
+    bin: "argo-apps-viz"
+  - selector:
+      matchLabels:
+        os: windows
+        arch: amd64
+    {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_windows_amd64.zip" .TagName }}
+    files:
+    - from: "/argo-apps-viz.exe"
+      to: "."
+    - from: LICENSE
+      to: "."
+    bin: "argo-apps-viz.exe"
