@@ -29,7 +29,7 @@ spec:
           arch: arm64
       {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_linux_arm64.tar.gz" .TagName }}
       files:
-        - from: "/argo-apps-viz"
+        - from: "./argo-apps-viz"
           to: "."
         - from: LICENSE
           to: "."
