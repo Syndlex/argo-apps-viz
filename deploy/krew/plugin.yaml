@@ -19,7 +19,7 @@ spec:
           values:
             - darwin
             - linux
-  {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/archive/{{ .TagName }}.tar.gz" .TagName }}
+    {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/archive/{{ .TagName }}.tar.gz" .TagName }}
   bin: "argo-apps-viz"
   files:
     - from: kubectx-*/kubectx
