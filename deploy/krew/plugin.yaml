@@ -22,7 +22,7 @@ spec:
     {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/archive/{{ .TagName }}.tar.gz" .TagName }}
     bin: "argo-apps-viz"
     files:
-      - from: kubectx-*/kubectx
+      - from: argo-apps-viz-*/argo-apps-viz
         to: .
-      - from: kubectx-*/LICENSE
+      - from: argo-apps-viz-*/LICENSE
         to: .
