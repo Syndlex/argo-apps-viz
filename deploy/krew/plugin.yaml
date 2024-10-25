@@ -47,6 +47,18 @@ spec:
     bin: "argo-apps-viz"
   - selector:
       matchLabels:
+        os: darwin
+        arch: arm64
+    {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_darwin_arm64.tar.gz" .TagName }}
+    files:
+    - from: "./argo-apps-viz"
+      to: "."
+    - from: LICENSE
+      to: "."
+    bin: "argo-apps-viz"
+
+  - selector:
+      matchLabels:
         os: windows
         arch: amd64
     {{addURIAndSha "https://github.com/syndlex/argo-apps-viz/releases/download/{{ .TagName }}/argo-apps-viz_windows_amd64.zip" .TagName }}
