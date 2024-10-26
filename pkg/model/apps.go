@@ -2,12 +2,15 @@ package model
 
 import (
 	"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
+	"github.com/go-echarts/go-echarts/v2/types"
 	"strings"
 )
 
 type App struct {
 	Name      string
 	ManagedBy string
+	Cluster   string
+	Tooltip   types.FuncStr
 }
 
 type Apps struct {
@@ -31,9 +34,21 @@ func (r *Apps) AddApps(item v1alpha1.Application) {
 			println(item.GetName(), " has no reference with Label (argocd.argoproj.io/instance), OwnerReferences or Annotation (argocd.argoproj.io/tracking-id)")
 		}
 	}
+	destName := item.Spec.Destination.Name
+	//Use Server when name is not used
+	if destName == "" {
+		destName = item.Spec.Destination.Server
+	}
+
 	r.Apps = append(r.Apps, App{
 		Name:      item.Name,
 		ManagedBy: tracking,
+		Cluster:   destName,
+		Tooltip: types.FuncStr(
+			"Application:<br/>" +
+				item.Name + " - " + destName +
+				"<br/>Created: " + item.CreationTimestamp.String() +
+				"<br/>Project: " + item.Spec.Project),
 	})
 }
 
@@ -49,9 +64,19 @@ func (r *Apps) AddAppsFromSet(item v1alpha1.ApplicationSet) {
 			println(item.GetName(), " has no refrence")
 		}
 	}
+	destName := item.Spec.Template.Spec.Destination.Name
+	//Use Server when name is not used
+	if destName == "" {
+		destName = item.Spec.Template.Spec.Destination.Server
+	}
+
 	r.Apps = append(r.Apps, App{
 		Name:      item.Name,
 		ManagedBy: tracking,
+		Cluster:   destName,
+		Tooltip: types.FuncStr("ApplicationSet:<br/>" +
+			item.Name + " - " + destName +
+			"<br/>Created: " + item.CreationTimestamp.String()),
 	})
 }
 

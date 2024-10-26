@@ -6,7 +6,7 @@ import (
 	"github.com/syndlex/argo-apps-viz/pkg/model"
 )
 
-func RenderTree(c model.Clusters) *charts.Tree {
+func RenderTree(c clusters) *charts.Tree {
 	cluster := renderTreeCluster(c)
 
 	tree := charts.NewTree()
@@ -43,7 +43,7 @@ func RenderTree(c model.Clusters) *charts.Tree {
 	return tree
 }
 
-func renderTreeDomains(d *model.Domains) []*opts.TreeData {
+func renderTreeDomains(d *domains) []*opts.TreeData {
 	var clusterNodes []*opts.TreeData
 	for key, values := range d.Repos {
 		clusterNodes = append(clusterNodes, &opts.TreeData{
@@ -54,7 +54,7 @@ func renderTreeDomains(d *model.Domains) []*opts.TreeData {
 	return clusterNodes
 }
 
-func renderTreeCluster(c model.Clusters) []*opts.TreeData {
+func renderTreeCluster(c clusters) []*opts.TreeData {
 	var clusterNodes []*opts.TreeData
 	for cluster, repo := range c.Domains {
 		clusterNodes = append(clusterNodes, &opts.TreeData{

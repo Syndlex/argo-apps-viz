@@ -7,7 +7,6 @@ import (
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/spf13/cobra"
 	"github.com/syndlex/argo-apps-viz/pkg/logger"
-	"github.com/syndlex/argo-apps-viz/pkg/model"
 	"github.com/syndlex/argo-apps-viz/pkg/model/dependencies"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -22,7 +21,7 @@ var graphdepsCmd = &cobra.Command{
 	Short: "Generate dependency documentation from your ArgoCD applications and applicationsSets within your cluster",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		logger := logger.NewLogger()
-		logger.Info("Generating Apps of Apps Chart :)")
+		logger.Info("Generating apps of apps Chart :)")
 		tree, err := runPlugin()
 		if err != nil {
 			return err
@@ -72,6 +71,6 @@ func runPlugin() (*charts.Tree, error) {
 		return nil, err
 	}
 
-	c := model.Model(applicationList, applicationSetList)
+	c := dependencies.CreatModel(applicationList, applicationSetList)
 	return dependencies.RenderTree(c), nil
 }

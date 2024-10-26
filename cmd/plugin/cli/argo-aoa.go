@@ -48,7 +48,8 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	argoAppsOffApps.Flags().StringArrayP("root", "r", []string{}, "When using a Recursive Apps of Apps pattern please add this here")
+	argoAppsOffApps.Flags().StringArray("start", []string{}, "Application where to start a graph. Useful when just printing a subgraph")
+	argoAppsOffApps.Flags().StringArray("stop", []string{}, "When using a Recursive apps of apps pattern, or you want to stop at a specific application at this")
 	argoAppsOffApps.Flags().BoolP("tree", "t", false, "Set this if you wand a tree instead of a graph")
 }
 
@@ -85,14 +86,32 @@ func runAoa(flags *pflag.FlagSet) (components.Charter, error) {
 		log.Error(err)
 		return nil, err
 	}
-	if isTree {
-		roots, err := flags.GetStringArray("root")
-		if err != nil {
-			log.Error(err)
-			return nil, err
+	starts, err := flags.GetStringArray("start")
+	if err != nil {
+		log.Error(err)
+		return nil, err
+	}
+	if len(starts) != 0 {
+		log.Info("Using applications as starting points of graph:")
+		for i, start := range starts {
+			log.Info("  %v, %v", i, start)
 		}
-		return appsofapps.RenderTree(applicationSetList, applicationList, roots), nil
+	}
+	stops, err := flags.GetStringArray("stop")
+	if err != nil {
+		log.Error(err)
+		return nil, err
+	}
+	if len(stops) != 0 {
+		log.Info("Using applications as stopping points of graph:")
+		for i, stop := range stops {
+			log.Info("  %v, %v", i, stop)
+		}
+	}
+
+	if isTree {
+		return appsofapps.RenderTree(applicationSetList, applicationList, stops), nil
 	} else {
-		return appsofapps.AppsOfAppsRenderGraph(applicationSetList, applicationList), nil
+		return appsofapps.AppsOfAppsRenderGraph(applicationSetList, applicationList, starts, stops), nil
 	}
 }

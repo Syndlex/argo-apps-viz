@@ -1,15 +1,16 @@
-package model
+package dependencies
 
 import (
 	"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
+	"github.com/syndlex/argo-apps-viz/pkg/model"
 	"net/url"
 )
 
-type Domains struct {
-	Repos map[string]*Apps
+type domains struct {
+	Repos map[string]*model.Apps
 }
 
-func (d Domains) addDomainApp(item v1alpha1.Application) {
+func (d domains) addDomainApp(item v1alpha1.Application) {
 	repoURL := item.Spec.GetSource().RepoURL
 	pars, err := url.Parse(repoURL)
 	if err != nil {
@@ -19,13 +20,13 @@ func (d Domains) addDomainApp(item v1alpha1.Application) {
 	host := pars.Host
 	app := d.Repos[host]
 	if app == nil {
-		app = &Apps{}
+		app = &model.Apps{}
 		d.Repos[host] = app
 	}
 	app.AddApps(item)
 }
 
-func (d Domains) addDomainAppSet(item v1alpha1.ApplicationSet) {
+func (d domains) addDomainAppSet(item v1alpha1.ApplicationSet) {
 	repoURL := item.Spec.Template.Spec.GetSource().RepoURL
 	pars, err := url.Parse(repoURL)
 	if err != nil {
@@ -35,7 +36,7 @@ func (d Domains) addDomainAppSet(item v1alpha1.ApplicationSet) {
 	host := pars.Host
 	app := d.Repos[host]
 	if app == nil {
-		app = &Apps{}
+		app = &model.Apps{}
 		d.Repos[host] = app
 	}
 	app.AddAppsFromSet(item)
