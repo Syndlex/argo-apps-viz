@@ -20,7 +20,11 @@ func (l *Logger) Info(msg string, args ...interface{}) {
 	}
 
 	c := color.New(color.FgHiCyan)
-	c.Println(fmt.Sprintf(msg, args...))
+	if len(args) > 0 {
+		c.Printf(msg+"\n", args...)
+	} else {
+		c.Println(msg)
+	}
 }
 
 func (l *Logger) Error(err error) {

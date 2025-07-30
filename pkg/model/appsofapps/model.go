@@ -1,8 +1,9 @@
 package appsofapps
 
 import (
-	alpha1 "github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
-	"github.com/syndlex/argo-apps-viz/pkg/model"
+	"argo-apps-viz/pkg/model" // Using local module
+
+	alpha1 "github.com/argoproj/argo-cd/v3/pkg/apis/application/v1alpha1" // Updated to v3
 )
 
 func createModel(applist *alpha1.ApplicationList, setList *alpha1.ApplicationSetList) model.Apps {

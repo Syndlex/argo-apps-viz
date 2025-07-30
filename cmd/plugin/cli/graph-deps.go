@@ -3,11 +3,13 @@ package cli
 import (
 	"context"
 	"fmt"
-	"github.com/argoproj/argo-cd/v2/pkg/client/clientset/versioned/typed/application/v1alpha1"
+
+	"argo-apps-viz/pkg/logger"
+	"argo-apps-viz/pkg/model/dependencies"
+
+	"github.com/argoproj/argo-cd/v3/pkg/client/clientset/versioned/typed/application/v1alpha1"
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/spf13/cobra"
-	"github.com/syndlex/argo-apps-viz/pkg/logger"
-	"github.com/syndlex/argo-apps-viz/pkg/model/dependencies"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -30,7 +32,7 @@ var graphdepsCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		logger.Info("Finished look in: " + dependenciesFile)
+		logger.Info("Finished look in: %s", dependenciesFile)
 		return err
 	},
 }
@@ -58,14 +60,21 @@ func runPlugin() (*charts.Tree, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// Get namespace from flags
+	namespace := rootCmd.Flags().Lookup("namespace").Value.String()
+	if namespace == "" {
+		namespace = "argocd" // fallback to default
+	}
+
 	var ctx = context.Background()
-	applicationList, err := argoclient.Applications("argocd").List(ctx, v1.ListOptions{})
+	applicationList, err := argoclient.Applications(namespace).List(ctx, v1.ListOptions{})
 	if err != nil {
 		fmt.Println("Problem while getting ArgoCD domains")
 		return nil, err
 	}
 
-	applicationSetList, err := argoclient.ApplicationSets("argocd").List(ctx, v1.ListOptions{})
+	applicationSetList, err := argoclient.ApplicationSets(namespace).List(ctx, v1.ListOptions{})
 	if err != nil {
 		fmt.Println("Problem while getting ArgoCd domains")
 		return nil, err

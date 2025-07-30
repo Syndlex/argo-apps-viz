@@ -1,8 +1,9 @@
 package dependencies
 
 import (
-	alpha1 "github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
-	model "github.com/syndlex/argo-apps-viz/pkg/model"
+	model "argo-apps-viz/pkg/model"
+
+	alpha1 "github.com/argoproj/argo-cd/v3/pkg/apis/application/v1alpha1"
 )
 
 type clusters struct {

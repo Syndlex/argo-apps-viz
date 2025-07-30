@@ -1,9 +1,10 @@
 package dependencies
 
 import (
+	"argo-apps-viz/pkg/model" // Changed to local import
+
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
-	"github.com/syndlex/argo-apps-viz/pkg/model"
 )
 
 func RenderTree(c clusters) *charts.Tree {
