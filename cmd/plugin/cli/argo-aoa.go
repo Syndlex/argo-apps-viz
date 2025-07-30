@@ -3,12 +3,14 @@ package cli
 import (
 	"context"
 	_ "embed"
-	"github.com/argoproj/argo-cd/v2/pkg/client/clientset/versioned/typed/application/v1alpha1"
+
+	"argo-apps-viz/pkg/logger"
+	"argo-apps-viz/pkg/model/appsofapps"
+
+	"github.com/argoproj/argo-cd/v3/pkg/client/clientset/versioned/typed/application/v1alpha1"
 	"github.com/go-echarts/go-echarts/v2/components"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
-	"github.com/syndlex/argo-apps-viz/pkg/logger"
-	"github.com/syndlex/argo-apps-viz/pkg/model/appsofapps"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -66,15 +68,22 @@ func runAoa(flags *pflag.FlagSet) (components.Charter, error) {
 		log.Error(err)
 		return nil, err
 	}
+
+	// Get namespace from flags
+	namespace, err := flags.GetString("namespace")
+	if err != nil {
+		namespace = "argocd" // fallback to default
+	}
+
 	var ctx = context.Background()
-	applicationList, err := argoclient.Applications("argocd").List(ctx, v1.ListOptions{})
+	applicationList, err := argoclient.Applications(namespace).List(ctx, v1.ListOptions{})
 	if err != nil {
 		log.Info("Problem while getting ArgoCd domains")
 		log.Error(err)
 		return nil, err
 	}
 
-	applicationSetList, err := argoclient.ApplicationSets("argocd").List(ctx, v1.ListOptions{})
+	applicationSetList, err := argoclient.ApplicationSets(namespace).List(ctx, v1.ListOptions{})
 	if err != nil {
 		log.Info("Problem while getting ArgoCd domains")
 		log.Error(err)
@@ -94,7 +103,7 @@ func runAoa(flags *pflag.FlagSet) (components.Charter, error) {
 	if len(starts) != 0 {
 		log.Info("Using applications as starting points of graph:")
 		for i, start := range starts {
-			log.Info("  %v, %v", i, start)
+			log.Info("  %d, %s", i, start)
 		}
 	}
 	stops, err := flags.GetStringArray("stop")
@@ -105,7 +114,7 @@ func runAoa(flags *pflag.FlagSet) (components.Charter, error) {
 	if len(stops) != 0 {
 		log.Info("Using applications as stopping points of graph:")
 		for i, stop := range stops {
-			log.Info("  %v, %v", i, stop)
+			log.Info("  %d, %s", i, stop)
 		}
 	}
 

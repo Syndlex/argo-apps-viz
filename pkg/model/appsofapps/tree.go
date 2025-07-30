@@ -1,10 +1,11 @@
 package appsofapps
 
 import (
-	"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
+	"argo-apps-viz/pkg/model"
+
+	"github.com/argoproj/argo-cd/v3/pkg/apis/application/v1alpha1"
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
-	"github.com/syndlex/argo-apps-viz/pkg/model"
 )
 
 func RenderTree(applicationSetList *v1alpha1.ApplicationSetList, applicationList *v1alpha1.ApplicationList, baseNode []string) *charts.Tree {

@@ -1,9 +1,10 @@
 package model
 
 import (
-	"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
-	"github.com/go-echarts/go-echarts/v2/types"
 	"strings"
+
+	"github.com/argoproj/argo-cd/v3/pkg/apis/application/v1alpha1"
+	"github.com/go-echarts/go-echarts/v2/types"
 )
 
 type App struct {

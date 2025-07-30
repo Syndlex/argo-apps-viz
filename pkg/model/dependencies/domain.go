@@ -1,9 +1,11 @@
 package dependencies
 
 import (
-	"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
-	"github.com/syndlex/argo-apps-viz/pkg/model"
 	"net/url"
+
+	"argo-apps-viz/pkg/model"
+
+	"github.com/argoproj/argo-cd/v3/pkg/apis/application/v1alpha1"
 )
 
 type domains struct {

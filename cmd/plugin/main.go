@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/syndlex/argo-apps-viz/cmd/plugin/cli"
-	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp" // required for GKE
+	"argo-apps-viz/cmd/plugin/cli" // Updated import path
+
+	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 )
 
 func main() {

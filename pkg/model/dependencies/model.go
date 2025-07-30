@@ -1,7 +1,7 @@
 package dependencies
 
 import (
-	alpha1 "github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
+	alpha1 "github.com/argoproj/argo-cd/v3/pkg/apis/application/v1alpha1"
 )
 
 func CreatModel(applist *alpha1.ApplicationList, setList *alpha1.ApplicationSetList) clusters {

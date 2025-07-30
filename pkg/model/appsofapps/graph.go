@@ -1,10 +1,11 @@
 package appsofapps
 
 import (
-	"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
+	"argo-apps-viz/pkg/model"
+
+	"github.com/argoproj/argo-cd/v3/pkg/apis/application/v1alpha1"
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
-	"github.com/syndlex/argo-apps-viz/pkg/model"
 )
 
 func AppsOfAppsRenderGraph(applicationSetList *v1alpha1.ApplicationSetList, applicationList *v1alpha1.ApplicationList, roots []string, stops []string) *charts.Graph {
@@ -24,7 +25,7 @@ func AppsOfAppsRenderGraph(applicationSetList *v1alpha1.ApplicationSetList, appl
 
 	graph := charts.NewGraph()
 	graph.SetGlobalOptions(
-		charts.WithTitleOpts(opts.Title{Title: "Show ArgoCd Representation of a Cluster"}),
+		charts.WithTitleOpts(opts.Title{Title: "Show ArgoCD Representation of a Cluster"}),
 		charts.WithInitializationOpts(opts.Initialization{
 			Width:    "100%",
 			Height:   "100%",
@@ -95,7 +96,6 @@ func getGraphNodesFromAppsRoot(apps model.Apps, appName string, stops []string) 
 			nodes = append(nodes, getGraphNodesFromAppsRoot(apps, app.Name, stops)...)
 		}
 	}
-	nodes = append(nodes)
 	return nodes
 }
 

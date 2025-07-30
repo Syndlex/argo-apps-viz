@@ -2,11 +2,12 @@ package cli
 
 import (
 	"fmt"
+	"os"
+	"strings"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
-	"os"
-	"strings"
 )
 
 var (
@@ -27,11 +28,13 @@ var (
 )
 
 func RootCmd() *cobra.Command {
-
 	cobra.OnInitialize(initConfig)
 
 	KubernetesConfigFlags = genericclioptions.NewConfigFlags(false)
 	KubernetesConfigFlags.AddFlags(rootCmd.Flags())
+
+	// Add namespace flag with default value
+	rootCmd.PersistentFlags().String("namespace", "argocd", "ArgoCD namespace (default: argocd)")
 
 	viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
 	return rootCmd
