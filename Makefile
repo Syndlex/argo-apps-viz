@@ -58,4 +58,9 @@ help:
 	@echo "  vet       - Run go vet"
 	@echo "  lint      - Run golangci-lint"
 	@echo "  clean     - Clean build artifacts"
+	@echo "  dev       - Run directly without building (use ARGS)"
+	@echo "  help      - Show this help message"
 
+.PHONY: dev
+dev:
+	@go run cmd/plugin/main.go $(ARGS)

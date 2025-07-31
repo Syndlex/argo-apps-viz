@@ -70,6 +70,9 @@ func (r *Apps) AddAppsFromSet(item v1alpha1.ApplicationSet) {
 	if destName == "" {
 		destName = item.Spec.Template.Spec.Destination.Server
 	}
+	if strings.HasPrefix(destName, "{{") {
+		destName = "in-cluster"
+	}
 
 	r.Apps = append(r.Apps, App{
 		Name:      item.Name,
